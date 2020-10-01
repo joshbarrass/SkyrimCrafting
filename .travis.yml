@@ -1,8 +1,10 @@
 language: python
 python:
- - "3.6"
+- '3.6'
 install:
- - pip install -r requirements.txt
+- pip install -r requirements.txt
+env:
+ - secure: nC9ZxRB8WfwPNFdB6cB1SeenL33KC8N4wIc6nLR5gxd8v/0TtVnqZvy54N8dWwGh9tvS/DVdZHnUP5X+QsDXI+ZBUTi+hDwAeiiR2q//8vx3tyjddeoozTzQRNF3Ap66Ov26iBkugnYxId84uUQTyW/rXmGqF7/Hl3F5yokUhOfQoi/V8vlckFej2d1YKS0Kt9rjCd+8iKz6dUuWyPQUXX2oCpnAM4mGF7Nhytt7QDFhyuwtof4cTC/I6h+saucmhGvn082UMne8/nxP0cEinPdpp+eDM34C47JCRHccU6W3PT+RO/dywCKPDHpwo+Hs2WiL8mSLEadyLr7zQXk4r7oUy2zKBajRvPQElmKH15ErW3itVYI7SB26/uq4L7a9NvGD82tYil3lojlg0tf9nUWwGoNAK8lwSSLFyLgRiprq+LCrAeqCbQ257sjvwPq5l8unRIe6gb181NNKtK1lB6bK182F6zHqkbLakU9m7VIMrTD/bIxC6gko3U+9U+KVmW0htG1A11ujYiaTZXRRGTVY6AJCisLoZMqiCoPowMcZRJW7Et0StHsXxu0GuoaYx41VJxj+ksfIb7d6e7knCRWKwrWTRnNJGFKHz2cNIkwn+4D7bk0AdXTlY9z9TeV6QJADL+Sm7YoP0PwSwrkf1wHqE+rADpp8NTheowZiX6Q=
 script:
- - nosetests -v --with-coverage test/
- - CODECLIMATE_REPO_TOKEN=<CODECLIMATE_TOKEN> codeclimate-test-reporter
+- nosetests -v --with-coverage test/
+- codeclimate-test-reporter
