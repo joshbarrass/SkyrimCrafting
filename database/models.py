@@ -110,6 +110,9 @@ class Recipe(Base):
             "{table}.id".format(table=Requirement.__tablename__)
         ),
     )
+    requirement = relationship(
+        "Requirement", foreign_keys="Recipe.requirement_id"
+    )
     quantity = Column(Integer)
 
     def __repr__(self):
