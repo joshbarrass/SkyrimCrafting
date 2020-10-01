@@ -66,15 +66,17 @@ class PotionItem(Base):
     effect = relationship(
         "PotionEffect", foreign_keys="PotionItem.effect_id"
     )
+    priority = Column(Integer)
     mag_multiplier = Column(Float)
     dur_multiplier = Column(Float)
     val_multiplier = Column(Float)
 
     def __repr__(self):
-        return "<{base}.PotionItem(item={item}, effect={effect}, mag_multiplier=x{mag}, dur_multiplier=x{dur}, val_multiplier=x{val})>".format(
+        return "<{base}.PotionItem(item={item}, effect={effect}, priority={priority}, mag_multiplier=x{mag}, dur_multiplier=x{dur}, val_multiplier=x{val})>".format(
             base=__name__,
             item=self.item_id,
             effect=self.effect_id,
+            priority=self.priority,
             mag=self.mag_multiplier,
             dur=self.dur_multiplier,
             val=self.val_multiplier
