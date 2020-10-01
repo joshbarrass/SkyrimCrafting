@@ -154,13 +154,17 @@ class TestWrappers(unittest.TestCase):
     def test_effect_association(self):
         item = self.db.get_item_by_ID(TEST_ITEM_ID)
         effect = self.db.get_effect_by_ID(TEST_EFFECT_ID)
-        self.db.add_effect_to_ingredient(effect, item, 1, 2, 3)
+        self.db.add_effect_to_ingredient(effect, item, 0, 1, 2, 3)
         self.db.commit()
 
         potionitems = self.db.get_effects_by_item(item)
         self.assertEqual(len(potionitems), 1)
         self.assertTestEffect(potionitems[0].effect)
         self.assertTestItem(potionitems[0].item)
+        self.assertEqual(potionitems[0].mag_multiplier, 1)
+        self.assertEqual(potionitems[0].dur_multiplier, 2)
+        self.assertEqual(potionitems[0].val_multiplier, 3)
+        self.assertEqual(potionitems[0].priority, 0)
 
         potionitems = self.db.get_items_by_effect(effect)
         self.assertEqual(len(potionitems), 1)

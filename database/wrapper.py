@@ -112,12 +112,13 @@ class Database:
         potionitems = self.session.query(PotionItem).filter_by(
             item_id=item.id,
         ).all()
-        return potionitems
+        return sorted(potionitems, key=lambda item: item.priority)
 
     def add_effect_to_ingredient(
         self,
         effect: PotionEffect,
         item: PotionEffect,
+        priority: int,
         mag_mult: float = 1,
         dur_mult: float = 1,
         val_mult: float = 1
@@ -128,6 +129,7 @@ class Database:
         new = PotionItem(
             item_id=item.id,
             effect_id=effect.id,
+            priority=priority,
             mag_multiplier=mag_mult,
             dur_multiplier=dur_mult,
             val_multiplier=val_mult
@@ -141,7 +143,7 @@ class Database:
         potion_items = self.session.query(PotionItem).filter_by(
             effect_id=effect.id
         ).all()
-        return potion_items
+        return sorted(potion_items, key=lambda item: item.priority)
 
     def add_requirement(self, name: str, desc: str) -> Requirement:
         self.have_session()
