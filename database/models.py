@@ -1,5 +1,6 @@
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, Float, String, Boolean, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
@@ -31,6 +32,7 @@ class PotionEffect(Base):
     base_mag = Column(Integer)
     base_dur = Column(Integer)
     value = Column(Integer) # value at 100 skill
+    vary_duration = Column(Boolean)
 
     def __repr__(self):
         return "<{base}.PotionEffect(id={id}, name={name}, is_negative={neg}, description={desc}, base_cost={cost}, base_mag={mag}, base_dur={dur}, value={value})>".format(
@@ -60,6 +62,10 @@ class PotionItem(Base):
         ),
         primary_key=True
     )
+    item = relationship("Item", foreign_keys="PotionItem.item_id")
+    effect = relationship(
+        "PotionEffect", foreign_keys="PotionItem.effect_id"
+    )
     mag_multiplier = Column(Float)
     dur_multiplier = Column(Float)
     val_multiplier = Column(Float)
@@ -74,6 +80,21 @@ class PotionItem(Base):
             val=self.val_multiplier
         )
 
+class Requirement(Base):
+    __tablename__ = "recipe_requirements"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    desc = Column(String)
+
+    def __repr__(self):
+        return "<{base}.Requirement(id={id}, name={name}, desc={desc})>".format(
+            base=__name__,
+            id=self.id,
+            name=self.name,
+            desc=self.desc,
+        )
+
 class Recipe(Base):
     __tablename__ = "recipes"
 
@@ -81,6 +102,13 @@ class Recipe(Base):
     result_id = Column(
         Integer,
         ForeignKey("{table}.id".format(table=Item.__tablename__)),
+    )
+    result = relationship("Item", foreign_keys="Recipe.result_id")
+    requirement_id = Column(
+        Integer,
+        ForeignKey(
+            "{table}.id".format(table=Requirement.__tablename__)
+        ),
     )
     quantity = Column(Integer)
 
@@ -104,6 +132,12 @@ class CraftingIngredient(Base):
         Integer,
         ForeignKey("{table}.id".format(table=Item.__tablename__)),
         primary_key=True
+    )
+    recipe = relationship(
+        "Recipe", foreign_keys="CraftingIngredient.recipe_id"
+    )
+    ingredient = relationship(
+        "Item", foreign_keys="CraftingIngredient.ingredient_id"
     )
     quantity = Column(Integer)
 
