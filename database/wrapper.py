@@ -32,6 +32,10 @@ class Database:
     def rollback(self):
         return self.session.rollback()
 
+    def close_session(self):
+        self.session.close()
+        self.session = None
+
     def new_item(
         self,
         name: str,
@@ -144,6 +148,12 @@ class Database:
         requirement = Requirement(name=name, desc=desc)
         self.session.add(requirement)
         return requirement
+
+    def get_requirements_by_name(self, name: str) -> List[Requirement]:
+        self.have_session()
+        reqs = self.session.query(Requirement).filter_by(name=name
+                                                         ).all()
+        return reqs
 
     def add_recipe(
         self,
