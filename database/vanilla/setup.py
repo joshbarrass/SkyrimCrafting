@@ -437,4 +437,19 @@ def setup_db(url):
             )
     }
 
+    db.add_effect_to_ingredient(
+        potion_effects["Cure Disease"], items["Mudcrab Chitin"], 0
+    )
+    db.add_effect_to_ingredient(
+        potion_effects["Cure Disease"], items["Vampire Dust"], 10
+    )
+    db.add_effect_to_ingredient(
+        potion_effects["Cure Disease"], items["Charred Skeever Hide"],
+        20, 1, 1, 0.36
+    )
+    db.add_effect_to_ingredient(
+        potion_effects["Cure Disease"], items["Hawk Feathers"], 30, 1,
+        1, 0.36
+    )
+
     db.commit()
